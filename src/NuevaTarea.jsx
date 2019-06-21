@@ -7,6 +7,7 @@ const NuevaTarea = (props) => {
         e.preventDefault()
         setContenido("")
         props.guardarTarea(contenido)
+        props.cerrarModal()
     }
 
     return (

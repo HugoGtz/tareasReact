@@ -4,7 +4,7 @@ import NuevaTarea from './NuevaTarea';
 import firebase from 'firebase'
 import {Row, Col} from 'antd'
 import Tarea from './Tarea'
-
+import NiceModal from './NiceModal'
 class App extends Component {
 
   state = {
@@ -24,9 +24,6 @@ class App extends Component {
       contenido,
       fecha: Date.now()
     })
-    this.setState( state => ({
-      tareas:[...state.tareas, contenido]
-    }))
   }
 
   eliminarTarea = (tareaKey) => {
@@ -38,7 +35,9 @@ class App extends Component {
     return (
       <Row type="flex" justify="center">
         < Col span={8}>
-          < NuevaTarea guardarTarea={this.guardarTarea} />
+          < NiceModal titulo="Nuevo Modal" tituloBoton="Abrir Modal">
+            < NuevaTarea guardarTarea={this.guardarTarea} />
+          < /NiceModal>
         </ Col>
         <ul>
           {
