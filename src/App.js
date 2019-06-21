@@ -5,10 +5,14 @@ import firebase from 'firebase'
 import {Row, Col} from 'antd'
 import Tarea from './Tarea'
 import NiceModal from './NiceModal'
+import {ThemeProvider} from './Providers'
+import FancyButton from './Button'
+
 class App extends Component {
 
   state = {
-    tareas: []
+    tareas: [],
+    theme: 'white'
   }
 
   componentDidMount(){
@@ -30,12 +34,17 @@ class App extends Component {
     firebase.database().ref(`/tareas/${tareaKey}`).remove()
   }
 
+  cambiarTema = () => this.setState(state => ({
+    theme: state.theme === "white" ? "dark" : "white"
+  }))
+
   render(){
-    const { tareas } = this.state
+    const { tareas, theme } = this.state
     return (
+      < ThemeProvider value={{theme: theme}} >
       <Row type="flex" justify="center">
         < Col span={8}>
-          < NiceModal titulo="Nuevo Modal" tituloBoton="Abrir Modal">
+          < NiceModal button={<FancyButton theme={theme}>Abrir</FancyButton>} titulo="Nuevo Modal" tituloBoton="Abrir Modal">
             < NuevaTarea guardarTarea={this.guardarTarea} />
           < /NiceModal>
         </ Col>
@@ -53,6 +62,8 @@ class App extends Component {
           }
         </ul>
       </Row>
+      <FancyButton onClick={this.cambiarTema}>Camiar Tema</FancyButton>
+      </ThemeProvider>
     )    
   }
   
